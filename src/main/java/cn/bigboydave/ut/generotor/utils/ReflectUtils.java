@@ -154,7 +154,7 @@ public class ReflectUtils {
     public static boolean isLambdaMethod(Method method) {
         String methodName = method.getName();
         int modifiers = method.getModifiers();
-        return methodName.startsWith("lambda") && 4106 == modifiers;
+        return methodName.startsWith("lambda$") || methodName.contains("$");
     }
 
     public static boolean isStaticAllMethod(List<MethodData> methodDataList) {
