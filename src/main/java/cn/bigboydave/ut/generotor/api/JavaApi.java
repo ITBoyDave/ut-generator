@@ -11,7 +11,9 @@ import cn.bigboydave.ut.generotor.interfaces.TemplateLoader;
 import cn.bigboydave.ut.generotor.parser.ClassParser;
 import org.apache.commons.lang3.StringUtils;
 
+import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.nio.charset.Charset;
 
@@ -50,7 +52,13 @@ public class JavaApi {
         if (commandArgs.isWrite()) {
             FileOutputStream fileOutputStream = null;
             try {
-                fileOutputStream = new FileOutputStream(commandArgs.getOutputFilePath());
+                String outputFilePath = commandArgs.getOutputFilePath();
+                String dirPath = outputFilePath.substring(0,outputFilePath.lastIndexOf(DIRECT_SYMBOL));
+                File fileDir = new File(dirPath);
+                if (!fileDir.exists()) {
+                    fileDir.mkdirs();
+                }
+                fileOutputStream = new FileOutputStream(outputFilePath);
                 fileOutputStream.write(render.getBytes(Charset.forName("utf-8")));
             } catch (Exception e) {
                 e.printStackTrace();
